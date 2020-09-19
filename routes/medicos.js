@@ -19,7 +19,7 @@ router.post('/', [
 
         validarJWT,
         check('nombre', 'El nombre es obligatorio').not().isEmpty(),
-        check('hospital', 'El hospital id no es válido').isMongoId(),
+        check('hospital', 'El id del hospital no es válido').isMongoId(),
         validarCampos
 
     ],
@@ -28,10 +28,20 @@ router.post('/', [
 router.put('/:id', [
 
 
+        validarJWT,
+        check('nombre', 'El nombre es obligatorio').not().isEmpty(),
+        check('id', 'El id del médico no es válido').isMongoId(),
+        check('hospital', 'El id del hospital no es válido').isMongoId(),
+        validarCampos
+
     ],
     actualizarMedico);
 
-router.delete('/:id', borrarMedico);
+router.delete('/:id', [validarJWT,
+        check('id', 'El id del médico no es válido').isMongoId(),
+        validarCampos
+    ],
+    borrarMedico);
 
 
 

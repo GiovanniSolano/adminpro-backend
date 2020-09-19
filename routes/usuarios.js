@@ -11,6 +11,7 @@ const router = Router();
 
 
 
+
 router.get('/', validarJWT, getUsuarios);
 router.post('/', [
         check('nombre', 'El nombre es obligatorio').not().isEmpty(),
@@ -25,12 +26,16 @@ router.put('/:id', [
         check('nombre', 'El nombre es obligatorio').not().isEmpty(),
         check('role', 'El rol es obligatorio').not().isEmpty(),
         check('email', 'El email es obligatorio').isEmail(),
+        check('id', 'El id del usuario no es válido').isMongoId(),
         validarCampos
 
     ],
     actualizarUsuario);
 
-router.delete('/:id', validarJWT, borrarUsuario);
+router.delete('/:id', [validarJWT,
+    check('id', 'El id del usuario no es válido').isMongoId(),
+    validarCampos
+], borrarUsuario);
 
 
 
